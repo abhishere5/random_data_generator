@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Normal Data Table</title>
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			padding: 20px;
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		table {
+			border-collapse: collapse;
+			margin: 0 auto;
+			background-color: yellow;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		}
+
+		th {
+			background-color: #f2f2f2;
+			color: #333;
+			text-align: left;
+			padding: 10px;
+		}
+
+		td {
+			border: 1px solid #ddd;
+			padding: 10px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		tr:hover {
+			background-color: #f5f5f5;
+		}
+
+		button {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-top: 20px;
+		}
+
+		button:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="flex-container">
+		<div class="container">
+			<form name="data" method="post" id="myform">
+				<h2>
+					Enter to generate data
+				</h2>
+				<label for="mean">Mean:</label>
+				<input type="number" id="mean" name="mean" required>
+				<br><br>
+				<label for="sd">Standard daviation:</label>
+				<input type="number" id="sd" name="sd" required>
+				<br><br>
+				<label for="num">No. of data:</label>
+				<input type="number" id="num" name="num" required>
+				<br><br>
+				<input type="submit" value="Submit" name="submit">
+			</form>
+		</div>
+	</div>
+	<h1> Table</h1>
+	<table id="uniform-table">
+		<thead>
+			<tr>
+				<th> Random Value</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<button id="download-csv">Download as CSV</button>
+	<button id="graph">Click to see the graph of generated data</button>
+	<button id="graph_comp">compare Two generated graph</button>
+
+	<script>
+		document.getElementById('myform').addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			const form = event.target;
+			const formFields = form.elements;
+
+			var mean = document.getElementById("mean").value;
+			let sd = document.getElementById("sd").value;
+			var num = document.getElementById("num").value;
+			apiCall(mean, sd, num);
+			grp(mean, sd, num);
+		}, false);
+		function apiCall(mean, sd, num) {
+			let linkk = "http://127.0.0.1:5000/normal/"
+			num = num.toString();
+			mean = mean.toString();
+			sd = sd.toString();
+			linkk = linkk.concat(mean)
+			linkk = linkk.concat('/')
+			linkk = linkk.concat(sd)
+			linkk = linkk.concat('/')
+			linkk = linkk.concat(num)
+			console.log(linkk)
+			const lnk = linkk;
+			fetch(linkk)
+				.then(response => response.json())
+				.then(data => {
+					const tableBody = document.querySelector('#uniform-table tbody');
+					const numCols = 4;
+					let row;
+
+					data.data.forEach((value, index) => {
+						if (index % numCols === 0) {
+							row = tableBody.insertRow();
+						}
+
+						const cell = row.insertCell();
+						cell.appendChild(document.createTextNode(value));
+					});
+				})
+				.catch(error => console.error(error));
+		}
+
+		//Add event listener for the download button
+		const downloadBtn = document.querySelector('#download-csv');
+		downloadBtn.addEventListener('click', () => {
+			const rows = document.querySelectorAll('#uniform-table tr');
+			let csv = [];
+			for (const row of rows) {
+				const rowData = [];
+				const cols = row.querySelectorAll('td');
+				for (const col of cols) {
+					rowData.push(col.textContent.trim());
+				}
+				csv.push(rowData.join(','));
+			}
+			csv = csv.join('\n');
+			const link = document.createElement('a');
+			link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+			link.setAttribute('download', 'uniform-data.csv');
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		});
+
+		//Event listener to the show graph button
+		function grp(mean, sd, num) {
+			const showBtn = document.querySelector('#graph');
+			showBtn.addEventListener('click', () => {
+				linkk = "http://127.0.0.1:5000/normal_graph/"
+				num = document.getElementById("num").value;
+				sd = document.getElementById("sd").value;
+				mean = document.getElementById("mean").value;
+				num = num.toString();
+				mean = mean.toString();
+				sd = sd.toString();
+				linkk = linkk.concat(mean)
+				linkk = linkk.concat('/')
+				linkk = linkk.concat(sd)
+				linkk = linkk.concat('/')
+				linkk = linkk.concat(num)
+				location.href = linkk;
+			});
+		}
+		const compBtn = document.querySelector('#graph_comp');
+		compBtn.addEventListener('click', () => {
+			lnkk = "http://127.0.0.1:8000/graph_comp"
+			location.href = lnkk;
+		});
+	</script>
+</body>
+
+</html>

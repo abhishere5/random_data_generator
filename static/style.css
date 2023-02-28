@@ -1,0 +1,80 @@
+body {
+    background-color: whitesmoke;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px #ccc;
+    text-align: center;
+    align-self: center;
+  }
+  .flex_container{
+    display: flex;
+    align-self: center;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  
+  label, input[type="submit"] {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 20px;
+  }
+  
+  input[type="text"], input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+  }
+
+  h1{
+  background-color: whitesmoke;
+  font-size: 28px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  }
+
+  #flex-container{
+    margin-top: 50px;
+  }
+  #signup-btn {
+  background-color: skyblue;
+  border: none;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+#download-btn:hover {
+  background-color: #04AA6D;
+}
+
+.main-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.main-box div{
+  margin: 15px;
+}
+
+.main-box img{
+  margin: 15px;
+}

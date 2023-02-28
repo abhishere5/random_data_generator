@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Distribution</title>
+    <style>
+    /* Add a background color to the header row */
+    #data-table th {
+        background-color: #F0F0F0;
+    }
+     #data-table tr:nth-of-type(2) td {
+        padding: 5px;
+    }
+    /* Add a gap between each row */
+#data-table td, #data-table th {
+    padding: 19px;
+}
+
+/* Add a solid border to the data table */
+#data-table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+    /* Add a bold font weight to the header cells */
+    #data-table th {
+        font-weight: bold;
+    }
+
+    /* Add a different background color to the "Generated Data" row */
+    #data-table tr:nth-of-type(2) {
+        background-color: #EFEFEF;
+    }
+</style>
+</head>
+<body>
+	<table id="data-table">
+	</table>
+    <script>
+        // store input numbers
+        let num = parseInt(prompt('Enter the number of data you want to generate'));
+        let link = "http://127.0.0.1:5000/binomial/"
+        num = num.toString();
+        link = link.concat(num)
+        fetch(link)
+				.then(response => response.json())
+			.then(data => {
+				const table = document.querySelector('#data-table');
+
+				// Add data rows
+				const generatedDataRow = table.insertRow();
+				const generatedDataHeader = document.createElement('th');
+				generatedDataHeader.textContent = 'Generated Data';
+				generatedDataRow.appendChild(generatedDataHeader);
+				const generatedData = data['Generated Data'];
+				for (const generatedDatum of generatedData) {
+					const td = document.createElement('td');
+					td.textContent = generatedDatum;
+					generatedDataRow.appendChild(td);
+				}
+
+				const kurtosisDataRow = table.insertRow();
+				const kurtosisHeader = document.createElement('th');
+				kurtosisHeader.textContent = 'Kurtosis';
+				kurtosisDataRow.appendChild(kurtosisHeader);
+				const kurtosisValue = data['Kurt of the generated Data'];
+				const kurtosisData = document.createElement('td');
+				kurtosisData.textContent = kurtosisValue;
+				kurtosisDataRow.appendChild(kurtosisData);
+
+				const meanDataRow = table.insertRow();
+				const meanHeader = document.createElement('th');
+				meanHeader.textContent = 'Mean';
+				meanDataRow.appendChild(meanHeader);
+				const meanValue = data['Mean of the generated Data'];
+				const meanData = document.createElement('td');
+				meanData.textContent = meanValue;
+				meanDataRow.appendChild(meanData);
+
+				const medianDataRow = table.insertRow();
+				const medianHeader = document.createElement('th');
+				medianHeader.textContent = 'Median';
+				medianDataRow.appendChild(medianHeader);
+				const medianValue = data['Median of the generated Data'];
+				const medianData = document.createElement('td');
+				medianData.textContent = medianValue;
+				medianDataRow.appendChild(medianData);
+
+				const modeDataRow = table.insertRow();
+				const modeHeader = document.createElement('th');
+				modeHeader.textContent = 'Mode';
+				modeDataRow.appendChild(modeHeader);
+				const modeValue = data['Mode of the generated Data'];
+				const modeData = document.createElement('td');
+				modeData.textContent = modeValue;
+				modeDataRow.appendChild(modeData);
+
+				const quantilesDataRow = table.insertRow();
+				const quantilesHeader = document.createElement('th');
+				quantilesHeader.textContent = 'Quantiles';
+				quantilesDataRow.appendChild(quantilesHeader);
+				const quantilesValue = data['Quantiles of the generated Data'];
+				const quantilesData = document.createElement('td');
+				quantilesData.textContent = JSON.stringify(quantilesValue);
+				quantilesDataRow.appendChild(quantilesData);
+
+				const rangeDataRow = table.insertRow();
+				const rangeHeader = document.createElement('th');
+				rangeHeader.textContent = 'Range';
+				rangeDataRow.appendChild(rangeHeader);
+				const rangeValue = data['Range of the generated Data'];
+				const rangeData = document.createElement('td');
+				rangeData.textContent = rangeValue;
+				rangeDataRow.appendChild(rangeData);
+
+				const skewnessDataRow = table.insertRow();
+				const skewnessHeader = document.createElement('th');
+				skewnessHeader.textContent = 'Skewness';
+				skewnessDataRow.appendChild(skewnessHeader);
+				const skewnessValue = data['Skewness of the generated Data'];
+				const skewnessData = document.createElement('td');
+				skewnessData.textContent = skewnessValue;
+				skewnessDataRow.appendChild(skewnessData);
+
+				const stdDevDataRow = table.insertRow();
+			})
+			.catch(error => console.error(error));
+    </script>
+
+</body>
+</html>

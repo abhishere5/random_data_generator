@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+
+<body>
+
+  <div class="main-box">
+    <div class="flex-container">
+      <div class="container">
+        <form name="login_form" action="{{ url_for('login') }}" method="post">
+          <h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+          </h1>
+          <h1>Login</h1>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+          <br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+          <br><br>
+          <input type="submit" value="Submit" name="login">
+        </form>
+      </div>
+    </div>
+    <div class="flex-container">
+      <div class="container">
+        <form name="signup_form" action="{{ url_for('signup') }}" method="post">
+          <h1>Signup</h1>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+          <label for="username">Username:</label>
+          <input type="text" id="username1" name="username" required>
+          <br><br>
+          <label for="password">Password:</label>
+          <input type="password" id="password1" name="password" required>
+          <br><br>
+          <input type="submit" value="Submit" name="signup">
+        </form>
+      </div>
+    </div>
+    <br><br>
+  </div>
+
+</body>
+
+</html>
